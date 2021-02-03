@@ -1,47 +1,27 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Font } from 'expo'
+import * as React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { useFonts } from 'expo-font';
 
-export default class App extends React.Component {
-  state = {
-    fontLoaded: false
-  }
-
-  async componentDidMount () {
-    await this._loadAssets()
-  }
+export default function App() {
+  const [loaded] = useFonts({
+    'NotoSansMyanmar-Bold': require('./assets/fonts/NotoSansMyanmar-Bold.ttf'),
+  });
   
-  async _loadAssets () {
-    await Font.loadAsync({
-      'lato-bold-extra': require('./assets/fonts/Lato-Black.ttf'),
-      'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
-      'lato-bold-italic': require('./assets/fonts/Lato-BoldItalic.ttf')
-    })
-    console.log('your fonts loaded!')
-    this.setState({fontLoaded: true})
+  if (!loaded) {
+    return null;
   }
 
-  render () {
-    let text = null
-    if (this.state.fontLoaded) {
-      text = <View>
-        <Text style={{fontSize: 24, fontFamily: 'lato-bold-extra'}}>
-          Hello, world!
-        </Text>
-        <Text style={{fontSize: 24, fontFamily: 'lato-bold'}}>
-          Hello, world!
-        </Text>
-        <Text style={{fontSize: 24, fontFamily: 'lato-bold-italic'}}>
-          Hello, world!
-        </Text>
-      </View>
-    }
-    return (
-      <View style={styles.container}>
-        {text}
-      </View>
-    )
-  }
+  return (
+    <View style={styles.container}>
+      <Text style={{ fontFamily: 'NotoSansMyanmar-Bold', fontSize: 15 }}>
+        {
+          `むかしむかし、 あるちいさなむらにゆきというむすめがおばあさんとふたりでくらしていました。ゆきは、とてもうつくしいこでしたが、ふたりはたいへんまずしいせいかつをしていました。むらぜんたいもまずし く、わかもののすがたもあまりみられませんでした。そして、ゆきとけっこんしたいというものも、だれひとりとしてあらわれたことはありませんでした。
+「ゆきや、おまえのしあわせをさがすために、みやこにいったほうがいいよ」とまいにちおばあさんはいいました。「おばあさまをひとりここにのこしてみやこへでかけることはできません」とそのたび、ゆきはこたえました。
+あるひ、おばあさんはなくなりました。 おばあさんをおはかにほうむってから、ゆきはなけなしのかざいをあつめ、みやこへむけてしゅっぱつしました。`
+        }
+      </Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -49,6 +29,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 20
   },
-})
+});
